@@ -21,15 +21,31 @@ const SidebarPagination: React.FC<SidebarPaginationProps> = ({
       <Button
         variant="primary"
         disabled={currentPage === 0}
-        onClick={() => handlePageChange(currentPage - 1)}
-        text="Previous"
+        onClick={() => handlePageChange(0)}
+        text="<<"
+        size="small"
       />
-      <span>{currentPage + 1}</span>
       <Button
+        variant="primary"
+        disabled={currentPage === 0}
+        onClick={() => handlePageChange(currentPage - 1)}
+        text="<"
+        size="small"
+      />
+      <span className="text-sm">Page {currentPage + 1}</span>
+      <Button
+        size="small"
         variant="primary"
         disabled={currentPage >= totalPages - 1}
         onClick={() => handlePageChange(currentPage + 1)}
-        text="Next"
+        text=">"
+      />
+      <Button
+        size="small"
+        variant="primary"
+        disabled={currentPage >= totalPages - 1}
+        onClick={() => handlePageChange(totalPages - 1)}
+        text=">>"
       />
     </div>
   );

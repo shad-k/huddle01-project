@@ -53,8 +53,8 @@ const useParticipantsStore = create<ParticipantsStore>((set) => ({
           ...state.participants,
           {
             ...newParticipant,
-            id: state.participants.length,
-            name: `User ${state.participants.length}`,
+            id: state.participants.length + 1,
+            name: `User ${state.participants.length + 1}`,
           },
         ],
       };

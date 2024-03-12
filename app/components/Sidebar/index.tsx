@@ -7,6 +7,7 @@ import useUIStore from "@/store/ui";
 import Button from "../Button";
 import SidebarParticipant from "./SidebarParticipant";
 import SidebarPagination from "./SidebarPagination";
+import { CURRENT_USER } from "@/utils/constants";
 
 const Sidebar: React.FC = () => {
   const isSidebarOpen = useUIStore((state) => state.isSidebarOpen);
@@ -49,7 +50,8 @@ const Sidebar: React.FC = () => {
         />
         <div className="flex flex-col justify-between gap-3 flex-1 pb-4">
           <h3 className="text-lg font-bold">Participants</h3>
-          <div className="flex flex-col gap-3 mb-8 flex-1">
+          <SidebarParticipant participant={CURRENT_USER} hideControls={true} />
+          <div className="flex flex-col gap-2 mb-8 flex-1">
             {paginatedParticipantsList.map((participant) => (
               <SidebarParticipant
                 key={participant.id}
@@ -59,7 +61,7 @@ const Sidebar: React.FC = () => {
           </div>
           <SidebarPagination
             currentPage={currentPage}
-            totalPages={Math.floor(participants.length % 10)}
+            totalPages={Math.ceil(participants.length / 10)}
             onPageChange={(page) => {
               setCurrentPage(page);
             }}
