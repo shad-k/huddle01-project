@@ -15,6 +15,7 @@ const MeetingParticipant: React.FC<IMeetingParticipantProps> = ({
         "relative flex flex-col items-center justify-center text-white rounded overflow-hidden h-full w-full ring-2",
         participant.audio ? "ring-blue-500" : "ring-slate-800",
       )}
+      data-testid="participant"
     >
       <div className="flex-1 flex items-center justify-center w-full bg-slate-400/10">
         {participant.video ? (

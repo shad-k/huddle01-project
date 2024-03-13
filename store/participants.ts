@@ -4,7 +4,7 @@ import { produce } from "immer";
 import { Participant } from "@/types";
 
 type ParticipantsStore = {
-  participants: Participant[];
+  participants: Array<Participant>;
   createParticipants: (count?: number) => void;
   updateParticipantAudio: (id: number, audio: boolean) => void;
   updateParticipantVideo: (id: number, video: boolean) => void;
@@ -14,7 +14,7 @@ type ParticipantsStore = {
 
 const useParticipantsStore = create<ParticipantsStore>((set) => ({
   participants: [],
-  createParticipants: (count: number = 9999) => {
+  createParticipants: (count: number = 25) => {
     set({ participants: createMockParticipants(count) });
   },
   updateParticipantAudio: (id: number, audio: boolean) => {

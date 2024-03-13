@@ -20,10 +20,8 @@ const DesktopGrid: React.FC<IDesktopGridProps> = ({
   return (
     <div
       className={clsx(
-        "hidden lg:flex flex-col items-center justify-center gap-4 w-full h-[calc(100vh-100px)]",
-        {
-          "w-[calc(100vw-320px)]": isSidebarOpen,
-        },
+        "hidden lg:flex flex-col items-center justify-center gap-4 h-[calc(100vh-100px)]",
+        isSidebarOpen ? "w-[calc(100vw-320px)]" : "w-full",
       )}
     >
       {grid}

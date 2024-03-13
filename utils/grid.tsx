@@ -1,6 +1,14 @@
 import MeetingParticipant from "@/app/components/MeetingParticipant";
 import { Participant } from "@/types";
 
+/**
+ * Create a grid of participants.
+ * @param participants - Array of participants
+ * @param totalParticipants - Total number of participants
+ * @param toggleSidebar - Function to toggle the sidebar
+ * @param maxInRow - Maximum number of participants in a row when the number of participants are higher than 10
+ * @returns JSX.Element - Grid of participants
+ */
 export const createGrid = (
   participants: Array<Participant>,
   totalParticipants: number,

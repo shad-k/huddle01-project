@@ -1,6 +1,5 @@
 "use client";
 import useParticipantsStore from "@/store/participants";
-import useUIStore from "@/store/ui";
 import { Participant } from "@/types";
 import { CURRENT_USER, MAX_PARTICIPANTS } from "@/utils/constants";
 import { createPriority } from "@/utils/priority";
@@ -14,12 +13,13 @@ const Participants = () => {
   const createParticipants = useParticipantsStore(
     (state) => state.createParticipants,
   );
-  const toggleSidebar = useUIStore((state) => state.toggleSidebar);
 
   useEffect(() => {
+    // Creates mock participants
     createParticipants();
-  }, []);
+  }, [createParticipants]);
 
+  // Get participants with both audio and video on, participants with either audio or video on, and others
   const { bothAudioVideoOn, audioOrVideoOn, others } = useMemo(() => {
     const bothAudioVideoOn: Array<Participant> = [];
     const audioOrVideoOn: Array<Participant> = [];
@@ -40,8 +40,14 @@ const Participants = () => {
     };
   }, [participants]);
 
+  // To accommodate the current user, we need to show one less participant
   const MAX_PARTICIPANTS_TO_SHOW = MAX_PARTICIPANTS - 1;
 
+  /**
+   * Get all participants that have both audio and video on.
+   * If there are more than the maximum participants to show, slice the array.
+   * Slice all the arrays till MAX_PARTICIPANTS_TO_SHOW is reached.
+   */
   const bothAudioVideoOnParticipants = bothAudioVideoOn.slice(
     0,
     MAX_PARTICIPANTS_TO_SHOW,
@@ -57,6 +63,7 @@ const Participants = () => {
       audioOrVideoOnParticipants.length,
   );
 
+  // Final list of participants to show
   const participantsToShow = createPriority(
     bothAudioVideoOnParticipants,
     audioOrVideoOnParticipants,
@@ -65,7 +72,7 @@ const Participants = () => {
   );
 
   return (
-    <div>
+    <>
       <DesktopGrid
         participantsToShow={participantsToShow}
         totalParticipants={participants.length}
@@ -78,7 +85,7 @@ const Participants = () => {
         participantsToShow={participantsToShow}
         totalParticipants={participants.length}
       />
-    </div>
+    </>
   );
 };
 
