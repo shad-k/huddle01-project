@@ -5,6 +5,7 @@ import { Participant } from "@/types";
 
 type ParticipantsStore = {
   participants: Participant[];
+  createParticipants: (count?: number) => void;
   updateParticipantAudio: (id: number, audio: boolean) => void;
   updateParticipantVideo: (id: number, video: boolean) => void;
   removeParticipant: (id: number) => void;
@@ -12,7 +13,10 @@ type ParticipantsStore = {
 };
 
 const useParticipantsStore = create<ParticipantsStore>((set) => ({
-  participants: createMockParticipants(),
+  participants: [],
+  createParticipants: (count: number = 9999) => {
+    set({ participants: createMockParticipants(count) });
+  },
   updateParticipantAudio: (id: number, audio: boolean) => {
     set(
       produce((state) => {

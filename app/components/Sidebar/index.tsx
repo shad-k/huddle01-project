@@ -33,7 +33,7 @@ const Sidebar: React.FC = () => {
       appear={true}
       as={Fragment}
     >
-      <div className="w-72 bg-white text-black p-2 rounded-xl h-[calc(100vh-64px)] fixed top-1 right-1 flex flex-col">
+      <div className="z-10 w-full md:w-72 bg-white text-black p-2 md:rounded-xl h-full md:h-[calc(100vh-64px)] fixed top-0 right-0 md:top-1 md:right-1 flex flex-col">
         <button
           onClick={toggleSidebar}
           className="absolute top-1 right-2 text-2xl border rounded-full flex items-center justify-center h-8 w-8"

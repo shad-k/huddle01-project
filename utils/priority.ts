@@ -34,14 +34,14 @@ function makeMinimumChanges(
 }
 
 /**
- * Creates a grid of participants to be shown in a video conference.
+ * Creates a list of participants to be shown in a video conference based on audio and video status.
  * @param bothAudioVideoOn - Participants with both audio and video on.
  * @param audioOrVideoOn - Participants with either audio or video on.
  * @param others - Other participants.
  * @param currentUser - The current user.
  * @returns participants to show.
  */
-export const createGrid = (() => {
+export const createPriority = (() => {
   const previousBothAudioVideoOn: Array<Participant> = [];
   const previousAudioOrVideoOn: Array<Participant> = [];
   const previousOthers: Array<Participant> = [];

@@ -3,14 +3,22 @@ import useParticipantsStore from "@/store/participants";
 import useUIStore from "@/store/ui";
 import { Participant } from "@/types";
 import { CURRENT_USER, MAX_PARTICIPANTS } from "@/utils/constants";
-import { createGrid } from "@/utils/grid";
-import { Transition } from "@headlessui/react";
-import clsx from "clsx";
-import { useMemo } from "react";
+import { createPriority } from "@/utils/priority";
+import { useEffect, useMemo } from "react";
+import DesktopGrid from "./GridLayouts/DesktopGrid";
+import MobileGrid from "./GridLayouts/MobileGrid";
+import TabletGrid from "./GridLayouts/TabletGrid";
 
 const Participants = () => {
   const participants = useParticipantsStore((state) => state.participants);
-  const isSidebarOpen = useUIStore((state) => state.isSidebarOpen);
+  const createParticipants = useParticipantsStore(
+    (state) => state.createParticipants,
+  );
+  const toggleSidebar = useUIStore((state) => state.toggleSidebar);
+
+  useEffect(() => {
+    createParticipants();
+  }, []);
 
   const { bothAudioVideoOn, audioOrVideoOn, others } = useMemo(() => {
     const bothAudioVideoOn: Array<Participant> = [];
@@ -49,7 +57,7 @@ const Participants = () => {
       audioOrVideoOnParticipants.length,
   );
 
-  const participantsToShow = createGrid(
+  const participantsToShow = createPriority(
     bothAudioVideoOnParticipants,
     audioOrVideoOnParticipants,
     otherParticipants,
@@ -57,35 +65,19 @@ const Participants = () => {
   );
 
   return (
-    <div
-      className={clsx("grid gap-4 w-full h-full pt-8", {
-        "w-[calc(100vw-320px)]": isSidebarOpen,
-      })}
-      style={{
-        gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))",
-      }}
-    >
-      {participantsToShow.map((participant) => (
-        <Transition
-          show={true}
-          enter="transition-opacity duration-75"
-          enterFrom="opacity-0"
-          enterTo="opacity-100"
-          leave="transition-opacity duration-150"
-          leaveFrom="opacity-100"
-          leaveTo="opacity-0"
-          key={participant.id}
-          appear={true}
-        >
-          <div className="col-span-1 bg-white text-black rounded-sm">
-            {participant.name}
-          </div>
-        </Transition>
-      ))}
-
-      {participants.length > 49 && (
-        <div className="col-span-1">+{participants.length - 49}</div>
-      )}
+    <div>
+      <DesktopGrid
+        participantsToShow={participantsToShow}
+        totalParticipants={participants.length}
+      />
+      <TabletGrid
+        participantsToShow={participantsToShow}
+        totalParticipants={participants.length}
+      />
+      <MobileGrid
+        participantsToShow={participantsToShow}
+        totalParticipants={participants.length}
+      />
     </div>
   );
 };
